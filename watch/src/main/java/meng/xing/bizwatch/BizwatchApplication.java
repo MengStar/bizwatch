@@ -1,5 +1,6 @@
 package meng.xing.bizwatch;
 
+import meng.xing.bizwatch.repository.InfluxDBConnect;
 import org.influxdb.dto.Point;
 import org.influxdb.dto.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import java.util.concurrent.TimeUnit;
 @SpringBootApplication
 @EnableConfigurationProperties
 public class BizwatchApplication {
+
 
     public static void main(String[] args) {
         BizwatchApplication bizwatchApplication= new BizwatchApplication();

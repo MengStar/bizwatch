@@ -1,4 +1,4 @@
-package meng.xing.bizwatch;
+package meng.xing.bizwatch.repository;
 
 import java.util.Map;
 
@@ -8,34 +8,31 @@ import org.influxdb.dto.Point;
 import org.influxdb.dto.Point.Builder;
 import org.influxdb.dto.Query;
 import org.influxdb.dto.QueryResult;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+@Component
+@PropertySource("classpath:application.yml")
 public class InfluxDBConnect {
-
+    @Value("${spring.influx.user}")
     private String username;//用户名
+    @Value("${spring.influx.password}")
     private String password;//密码
+    @Value("${spring.influx.url}")
     private String openurl;//连接地址
+
     private String database;//数据库
-
     private InfluxDB influxDB;
-
-
-    public InfluxDBConnect(String username, String password, String openurl, String database) {
-        this.username = username;
-        this.password = password;
-        this.openurl = openurl;
-        this.database = database;
-    }
-
     /**
      * 连接时序数据库；获得InfluxDB
      **/
-    public InfluxDB influxDbBuild() {
+    public InfluxDB influxDbBuild(String database) {
         if (influxDB == null) {
             influxDB = InfluxDBFactory.connect(openurl, username, password);
-            influxDB.createDatabase(database);
-
         }
+        this.database =database;
         return influxDB;
     }
 
